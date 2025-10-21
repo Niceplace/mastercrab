@@ -1,0 +1,24 @@
+{
+    "data": {
+        "viewer": {
+            "assignedIssues": {
+                "edges": [
+                    {
+                        "node": {
+                            "id": "ff5beca5-9ba2-460f-be83-8c9762149c4d",
+                            "title": "Add tooling-production to cronjob trigger environments",
+                            "url": "https://linear.app/pleo/issue/SRE-7412/add-tooling-production-to-cronjob-trigger-environments"
+                        }
+                    },
+                    {
+                        "node": {
+                            "id": "aab53ff6-aba6-4ed0-a22c-eb6bc587e4ba",
+                            "title": "Add requested_teams property to Pull Request blueprint on Port",
+                            "url": "https://linear.app/pleo/issue/DEVX-3672/add-requested-teams-property-to-pull-request-blueprint-on-port"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
