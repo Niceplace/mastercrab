@@ -1,0 +1,55 @@
+{
+  "data": {
+    "issue": {
+      "id": "ff5beca5-9ba2-460f-be83-8c9762149c4d",
+      "title": "Add tooling-production to cronjob trigger environments",
+      "description": "## Context\n\nWe need to add the `tooling-production` environment to our cronjob trigger configuration.\n\n## Tasks\n\n- [x] Update cronjob configuration\n- [x] Test in staging\n- [ ] Deploy to production\n\n## Notes\n\nThis will enable automated deployments for the tooling environment.",
+      "url": "https://linear.app/pleo/issue/SRE-7412/add-tooling-production-to-cronjob-trigger-environments",
+      "identifier": "SRE-7412",
+      "state": {
+        "name": "In Progress",
+        "type": "started"
+      },
+      "priority": 2,
+      "priorityLabel": "Medium",
+      "labels": {
+        "nodes": [
+          {
+            "name": "infrastructure",
+            "color": "#3b82f6"
+          },
+          {
+            "name": "automation",
+            "color": "#10b981"
+          }
+        ]
+      },
+      "comments": {
+        "nodes": [
+          {
+            "id": "comment-1",
+            "body": "Started working on this. Will update the config in the infrastructure repo.",
+            "createdAt": "2025-01-15T10:30:00Z",
+            "user": {
+              "name": "John Doe"
+            }
+          },
+          {
+            "id": "comment-2",
+            "body": "Config updated and tested in staging. Looks good!",
+            "createdAt": "2025-01-15T14:20:00Z",
+            "user": {
+              "name": "John Doe"
+            }
+          }
+        ]
+      },
+      "assignee": {
+        "name": "John Doe",
+        "email": "john.doe@example.com"
+      },
+      "createdAt": "2025-01-14T09:00:00Z",
+      "updatedAt": "2025-01-15T14:20:00Z"
+    }
+  }
+}

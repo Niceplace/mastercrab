@@ -70,8 +70,9 @@ func initConfig() {
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
 
-		// Search config in home directory with name "crab.yaml" (without extension).
+		// Search config in home directory and current directory with name "crab" (without extension).
 		viper.AddConfigPath(home)
+		viper.AddConfigPath(".") // also look in the current directory
 		viper.SetConfigType("yaml")
 		viper.SetConfigName("crab")
 	}
