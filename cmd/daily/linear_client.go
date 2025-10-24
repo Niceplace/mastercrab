@@ -53,9 +53,9 @@ type LinearIssueDetails struct {
 		Name string `json:"name"`
 		Type string `json:"type"`
 	} `json:"state"`
-	Priority     int    `json:"priority"`
+	Priority      int    `json:"priority"`
 	PriorityLabel string `json:"priorityLabel"`
-	Labels       struct {
+	Labels        struct {
 		Nodes []struct {
 			Name  string `json:"name"`
 			Color string `json:"color"`
@@ -66,6 +66,7 @@ type LinearIssueDetails struct {
 			ID        string `json:"id"`
 			Body      string `json:"body"`
 			CreatedAt string `json:"createdAt"`
+			UpdatedAt string `json:"updatedAt"`
 			User      struct {
 				Name string `json:"name"`
 			} `json:"user"`
@@ -195,6 +196,7 @@ func GetIssueDetails(client *http.Client, issueID string, config *viper.Viper) (
 							id
 							body
 							createdAt
+							updatedAt
 							user {
 								name
 							}

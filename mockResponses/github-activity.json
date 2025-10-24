@@ -1,0 +1,148 @@
+{
+  "data": {
+    "viewer": {
+      "login": "testuser",
+      "contributionsCollection": {
+        "totalCommitContributions": 5,
+        "totalIssueContributions": 2,
+        "totalPullRequestContributions": 3,
+        "totalPullRequestReviewContributions": 4,
+        "commitContributionsByRepository": [
+          {
+            "repository": {
+              "name": "mastercrab",
+              "owner": {
+                "login": "testorg"
+              }
+            },
+            "contributions": {
+              "nodes": [
+                {
+                  "commitCount": 3,
+                  "occurredAt": "2025-10-22T10:00:00Z"
+                },
+                {
+                  "commitCount": 2,
+                  "occurredAt": "2025-10-22T14:00:00Z"
+                }
+              ]
+            }
+          }
+        ],
+        "issueContributions": {
+          "nodes": [
+            {
+              "issue": {
+                "title": "Add GitHub integration",
+                "url": "https://github.com/testorg/mastercrab/issues/1",
+                "number": 1,
+                "repository": {
+                  "name": "mastercrab",
+                  "owner": {
+                    "login": "testorg"
+                  }
+                }
+              },
+              "occurredAt": "2025-10-22T09:00:00Z"
+            },
+            {
+              "issue": {
+                "title": "Fix bug in summary generation",
+                "url": "https://github.com/testorg/mastercrab/issues/2",
+                "number": 2,
+                "repository": {
+                  "name": "mastercrab",
+                  "owner": {
+                    "login": "testorg"
+                  }
+                }
+              },
+              "occurredAt": "2025-10-22T11:00:00Z"
+            }
+          ]
+        },
+        "pullRequestContributions": {
+          "nodes": [
+            {
+              "pullRequest": {
+                "title": "feat: Add daily command",
+                "url": "https://github.com/testorg/mastercrab/pull/10",
+                "number": 10,
+                "state": "MERGED",
+                "repository": {
+                  "name": "mastercrab",
+                  "owner": {
+                    "login": "testorg"
+                  }
+                }
+              },
+              "occurredAt": "2025-10-22T08:00:00Z"
+            },
+            {
+              "pullRequest": {
+                "title": "feat: Add GitHub client",
+                "url": "https://github.com/testorg/mastercrab/pull/11",
+                "number": 11,
+                "state": "OPEN",
+                "repository": {
+                  "name": "mastercrab",
+                  "owner": {
+                    "login": "testorg"
+                  }
+                }
+              },
+              "occurredAt": "2025-10-22T12:00:00Z"
+            },
+            {
+              "pullRequest": {
+                "title": "docs: Update README",
+                "url": "https://github.com/testorg/mastercrab/pull/12",
+                "number": 12,
+                "state": "OPEN",
+                "repository": {
+                  "name": "mastercrab",
+                  "owner": {
+                    "login": "testorg"
+                  }
+                }
+              },
+              "occurredAt": "2025-10-22T15:00:00Z"
+            }
+          ]
+        },
+        "pullRequestReviewContributions": {
+          "nodes": [
+            {
+              "pullRequest": {
+                "title": "fix: Handle empty responses",
+                "url": "https://github.com/testorg/other-repo/pull/5",
+                "number": 5,
+                "repository": {
+                  "name": "other-repo",
+                  "owner": {
+                    "login": "testorg"
+                  }
+                }
+              },
+              "occurredAt": "2025-10-22T13:00:00Z"
+            },
+            {
+              "pullRequest": {
+                "title": "refactor: Simplify client code",
+                "url": "https://github.com/testorg/other-repo/pull/6",
+                "number": 6,
+                "repository": {
+                  "name": "other-repo",
+                  "owner": {
+                    "login": "testorg"
+                  }
+                }
+              },
+              "occurredAt": "2025-10-22T16:00:00Z"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

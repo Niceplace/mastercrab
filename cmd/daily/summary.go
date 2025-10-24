@@ -25,6 +25,8 @@ func DisplayIssueDetails(issue LinearIssueDetails) {
 	fmt.Printf("\n🔗 URL: %s\n", issue.URL)
 	fmt.Printf("📊 State: %s (%s)\n", issue.State.Name, issue.State.Type)
 	fmt.Printf("⚡ Priority: %s\n", issue.PriorityLabel)
+	fmt.Printf("🕛 Created at: %s\n", issue.CreatedAt)
+	fmt.Printf("🕞 Updated at: %s\n", issue.UpdatedAt)
 
 	if issue.Assignee.Name != "" {
 		fmt.Printf("👤 Assignee: %s\n", issue.Assignee.Name)
@@ -69,15 +71,15 @@ func DisplayIssueDetails(issue LinearIssueDetails) {
 	// Display recent comments
 	if len(issue.Comments.Nodes) > 0 {
 		fmt.Printf("\n💬 Comments (%d total):\n", len(issue.Comments.Nodes))
-		// Show only the last 3 comments
+		// Show only last 10 comments
 		start := 0
-		if len(issue.Comments.Nodes) > 3 {
-			start = len(issue.Comments.Nodes) - 3
-			fmt.Printf("   (Showing last 3 comments)\n")
+		if len(issue.Comments.Nodes) > 10 {
+			start = len(issue.Comments.Nodes) - 10
+			fmt.Printf("   (Showing last 10 comments)\n")
 		}
 		for i := start; i < len(issue.Comments.Nodes); i++ {
 			comment := issue.Comments.Nodes[i]
-			fmt.Printf("\n  💭 %s:\n", comment.User.Name)
+			fmt.Printf("\n  💭 %s: %s \n", comment.User.Name, comment.UpdatedAt)
 			// Render comment body as markdown too
 			renderer, err := glamour.NewTermRenderer(
 				glamour.WithAutoStyle(),
@@ -202,6 +204,91 @@ func GenerateMarkdownSummary(issuesWithNotes []IssueWithNotes, filename string) 
 
 	// Footer
 	fmt.Fprintf(file, "\n*Generated at %s*\n", time.Now().Format("2006-01-02 15:04:05"))
+
+	return nil
+}
+
+// GenerateSimplifiedMarkdownSummary creates a simplified markdown summary with GitHub activity
+func GenerateSimplifiedMarkdownSummary(issuesWithNotes []IssueWithNotes, githubActivity GitHubActivity, filename string) error {
+	file, err := os.Create(filename)
+	if err != nil {
+		return fmt.Errorf("failed to create summary file: %w", err)
+	}
+	defer file.Close()
+
+	// Write header
+	today := time.Now().Format("Monday, January 2, 2006")
+	fmt.Fprintf(file, "# Daily Work Summary - %s\n\n", today)
+
+	// GitHub Activity Section
+	if githubActivity.TotalCommits > 0 || githubActivity.TotalPullRequests > 0 ||
+		githubActivity.TotalReviews > 0 || githubActivity.TotalIssues > 0 {
+		fmt.Fprintf(file, "## GitHub Activity\n\n")
+
+		// Pull Requests Created
+		if len(githubActivity.PullRequestsCreated) > 0 {
+			for _, pr := range githubActivity.PullRequestsCreated {
+				fmt.Fprintf(file, "- [%s/%s#%d: %s](%s)\n",
+					pr.RepoOwner, pr.RepoName, pr.Number, pr.Title, pr.URL)
+			}
+			fmt.Fprintln(file)
+		}
+
+		// Issues Created
+		if len(githubActivity.IssuesCreated) > 0 {
+			for _, issue := range githubActivity.IssuesCreated {
+				fmt.Fprintf(file, "- [%s/%s#%d: %s](%s)\n",
+					issue.RepoOwner, issue.RepoName, issue.Number, issue.Title, issue.URL)
+			}
+			fmt.Fprintln(file)
+		}
+
+		// Pull Request Reviews
+		if len(githubActivity.PullRequestsReviewed) > 0 {
+			for _, pr := range githubActivity.PullRequestsReviewed {
+				fmt.Fprintf(file, "- [%s/%s#%d: %s](%s) - Reviewed\n",
+					pr.RepoOwner, pr.RepoName, pr.Number, pr.Title, pr.URL)
+			}
+			fmt.Fprintln(file)
+		}
+
+		// Commits by Repository
+		if len(githubActivity.CommitsByRepo) > 0 {
+			for repo, count := range githubActivity.CommitsByRepo {
+				fmt.Fprintf(file, "- %s: %d commit(s)\n", repo, count)
+			}
+			fmt.Fprintln(file)
+		}
+	}
+
+	// Linear Issues Section
+	if len(issuesWithNotes) > 0 {
+		fmt.Fprintf(file, "## Linear Issues\n\n")
+
+		for _, issueNote := range issuesWithNotes {
+			issue := issueNote.Details
+
+			// First level: URL + short description
+			fmt.Fprintf(file, "- [%s: %s](%s)\n", issue.Identifier, issue.Title, issue.URL)
+
+			// Second level: user notes (if any)
+			if issueNote.UserNotes != "" {
+				noteLines := strings.Split(issueNote.UserNotes, "\n")
+				for _, line := range noteLines {
+					if strings.TrimSpace(line) != "" {
+						fmt.Fprintf(file, "  - %s\n", strings.TrimSpace(line))
+					}
+				}
+			}
+		}
+		fmt.Fprintln(file)
+	}
+
+	if len(issuesWithNotes) == 0 && githubActivity.TotalCommits == 0 &&
+		githubActivity.TotalPullRequests == 0 && githubActivity.TotalReviews == 0 &&
+		githubActivity.TotalIssues == 0 {
+		fmt.Fprintln(file, "No activity recorded for this period.")
+	}
 
 	return nil
 }

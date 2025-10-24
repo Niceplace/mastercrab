@@ -91,8 +91,8 @@ func Test_GetViewerAssignedIssues_SuccessWithMockFile(t *testing.T) {
 
 	// Verify specific issue details
 	firstIssue := result.Viewer.AssignedIssues.Edges[0].Node
-	assert.Equal(t, "ff5beca5-9ba2-460f-be83-8c9762149c4d", firstIssue.ID)
-	assert.Equal(t, "Add tooling-production to cronjob trigger environments", firstIssue.Title)
+	assert.Equal(t, "test-issue-id-001", firstIssue.ID)
+	assert.Equal(t, "Implement user authentication feature", firstIssue.Title)
 	assert.Contains(t, firstIssue.URL, "linear.app")
 }
 
@@ -254,8 +254,8 @@ func Test_UnmarshalMockResponse(t *testing.T) {
 
 	// Verify first issue
 	firstIssue := response.Data.Viewer.AssignedIssues.Edges[0].Node
-	assert.Equal(t, "ff5beca5-9ba2-460f-be83-8c9762149c4d", firstIssue.ID)
-	assert.Equal(t, "Add tooling-production to cronjob trigger environments", firstIssue.Title)
+	assert.Equal(t, "test-issue-id-001", firstIssue.ID)
+	assert.Equal(t, "Implement user authentication feature", firstIssue.Title)
 	assert.Contains(t, firstIssue.URL, "linear.app")
 }
 
@@ -306,32 +306,32 @@ func Test_GetIssueDetails_Success(t *testing.T) {
 	config := createTestConfig(mockServer.URL, "test-api-token")
 
 	// Act
-	issueID := "ff5beca5-9ba2-460f-be83-8c9762149c4d"
+	issueID := "test-issue-id-001"
 	result, err := GetIssueDetails(&http.Client{}, issueID, config)
 
 	// Assert
 	require.NoError(t, err)
 	assert.Equal(t, issueID, result.ID)
-	assert.Equal(t, "Add tooling-production to cronjob trigger environments", result.Title)
-	assert.Equal(t, "SRE-7412", result.Identifier)
+	assert.Equal(t, "Implement user authentication feature", result.Title)
+	assert.Equal(t, "TEST-123", result.Identifier)
 	assert.Equal(t, "In Progress", result.State.Name)
-	assert.Equal(t, "Medium", result.PriorityLabel)
+	assert.Equal(t, "High", result.PriorityLabel)
 	assert.NotEmpty(t, result.Description)
-	assert.Contains(t, result.Description, "Context")
+	assert.Contains(t, result.Description, "Overview")
 
 	// Verify labels
 	assert.Equal(t, 2, len(result.Labels.Nodes))
-	assert.Equal(t, "infrastructure", result.Labels.Nodes[0].Name)
-	assert.Equal(t, "automation", result.Labels.Nodes[1].Name)
+	assert.Equal(t, "backend", result.Labels.Nodes[0].Name)
+	assert.Equal(t, "security", result.Labels.Nodes[1].Name)
 
 	// Verify comments
 	assert.Equal(t, 2, len(result.Comments.Nodes))
-	assert.Equal(t, "John Doe", result.Comments.Nodes[0].User.Name)
-	assert.Contains(t, result.Comments.Nodes[0].Body, "Started working")
+	assert.Equal(t, "Alice Developer", result.Comments.Nodes[0].User.Name)
+	assert.Contains(t, result.Comments.Nodes[0].Body, "Started implementation")
 
 	// Verify assignee
-	assert.Equal(t, "John Doe", result.Assignee.Name)
-	assert.Equal(t, "john.doe@example.com", result.Assignee.Email)
+	assert.Equal(t, "Alice Developer", result.Assignee.Name)
+	assert.Equal(t, "alice@example.com", result.Assignee.Email)
 }
 
 // Test GetIssueDetails with API error

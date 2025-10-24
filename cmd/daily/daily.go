@@ -16,26 +16,53 @@ import (
 // dailyCmd represents the daily command
 var DailyCmd = &cobra.Command{
 	Use:   "daily",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Generate a daily work summary from Linear and GitHub activity",
+	Long: `Generate a daily work summary by fetching your recent activity from Linear
+(assigned issues) and GitHub (commits, PRs, reviews, issues).
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+By default, this command looks back 24 hours, but you can customize the time period
+using the --hours flag.
+
+Example:
+  mastercrab daily              # Summary for the last 24 hours
+  mastercrab daily --hours 48   # Summary for the last 48 hours`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("📅 Daily Work Summary Generator")
 		fmt.Println(strings.Repeat("═", 80))
 
-		// Use -P1D for last 24 hours by default (can be overridden by flag in the future)
-		dateFilter := "-P1D"
+		// Get the lookback hours from flag, defaulting to 24 hours
+		lookbackHours, _ := cmd.Flags().GetInt("hours")
+
+		// Calculate time period
+		until := time.Now()
+		since := until.Add(-time.Duration(lookbackHours) * time.Hour)
+
+		// Convert to Linear date filter format (ISO 8601 duration)
+		linearDateFilter := fmt.Sprintf("-P%dD", lookbackHours/24)
+		if lookbackHours < 24 {
+			linearDateFilter = "-P1D" // Linear doesn't support hourly granularity well
+		}
 
 		// Create HTTP client
 		client := &http.Client{}
 
-		// Fetch viewer's assigned issues
-		fmt.Println("\n🔍 Fetching issues updated in the last 24 hours...")
-		linearViewer, err := GetViewerAssignedIssues(client, dateFilter, viper.GetViper())
+		// Fetch GitHub activity
+		fmt.Printf("\n🔍 Fetching GitHub activity from the last %d hours...\n", lookbackHours)
+		githubActivity, err := GetViewerActivity(client, since, until, viper.GetViper())
+		if err != nil {
+			fmt.Printf("⚠️  Failed to fetch GitHub activity: %s\n", err)
+			// Continue with Linear even if GitHub fails
+		} else {
+			fmt.Printf("✅ Found GitHub activity: %d commits, %d PRs, %d reviews, %d issues\n",
+				githubActivity.TotalCommits,
+				githubActivity.TotalPullRequests,
+				githubActivity.TotalReviews,
+				githubActivity.TotalIssues)
+		}
+
+		// Fetch Linear assigned issues
+		fmt.Printf("\n🔍 Fetching Linear issues updated in the last %d hours...\n", lookbackHours)
+		linearViewer, err := GetViewerAssignedIssues(client, linearDateFilter, viper.GetViper())
 		if err != nil {
 			fmt.Printf("❌ Failed to fetch assigned issues: %s\n", err)
 			return
@@ -43,12 +70,14 @@ to quickly create a Cobra application.`,
 
 		// Display the results
 		issues := linearViewer.Viewer.AssignedIssues.Edges
-		if len(issues) == 0 {
-			fmt.Println("✅ No issues updated in the last 24 hours")
+		if len(issues) == 0 && githubActivity.TotalCommits == 0 &&
+			githubActivity.TotalPullRequests == 0 && githubActivity.TotalReviews == 0 &&
+			githubActivity.TotalIssues == 0 {
+			fmt.Println("✅ No activity found in the specified time period")
 			return
 		}
 
-		fmt.Printf("\n✅ Found %d issue(s) updated in the last 24 hours\n", len(issues))
+		fmt.Printf("✅ Found %d Linear issue(s) updated in the last %d hours\n", len(issues), lookbackHours)
 
 		// Interactive flow: fetch details and prompt for notes
 		var issuesWithNotes []IssueWithNotes
@@ -86,17 +115,11 @@ to quickly create a Cobra application.`,
 			}
 		}
 
-		// Generate summary if any issues were worked on
-		if len(issuesWithNotes) == 0 {
-			fmt.Println("\n📝 No work recorded for today. No summary generated.")
-			return
-		}
-
 		// Generate the markdown summary
 		summaryFilename := fmt.Sprintf("daily-summary-%s.md", time.Now().Format("2006-01-02"))
 		fmt.Printf("\n📄 Generating summary file: %s\n", summaryFilename)
 
-		err = GenerateMarkdownSummary(issuesWithNotes, summaryFilename)
+		err = GenerateSimplifiedMarkdownSummary(issuesWithNotes, githubActivity, summaryFilename)
 		if err != nil {
 			fmt.Printf("❌ Failed to generate summary: %s\n", err)
 			return
@@ -104,19 +127,10 @@ to quickly create a Cobra application.`,
 
 		fmt.Printf("\n✨ Summary generated successfully!\n")
 		fmt.Printf("📂 File: %s\n", summaryFilename)
-		fmt.Printf("📊 Total issues documented: %d\n", len(issuesWithNotes))
 	},
 }
 
 func init() {
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// dailyCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	DailyCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// Add flag for configurable time period (in hours)
+	DailyCmd.Flags().IntP("hours", "H", 24, "Number of hours to look back for activity (default: 24)")
 }

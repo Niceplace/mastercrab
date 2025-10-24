@@ -1,55 +1,55 @@
 {
   "data": {
     "issue": {
-      "id": "ff5beca5-9ba2-460f-be83-8c9762149c4d",
-      "title": "Add tooling-production to cronjob trigger environments",
-      "description": "## Context\n\nWe need to add the `tooling-production` environment to our cronjob trigger configuration.\n\n## Tasks\n\n- [x] Update cronjob configuration\n- [x] Test in staging\n- [ ] Deploy to production\n\n## Notes\n\nThis will enable automated deployments for the tooling environment.",
-      "url": "https://linear.app/pleo/issue/SRE-7412/add-tooling-production-to-cronjob-trigger-environments",
-      "identifier": "SRE-7412",
+      "id": "test-issue-id-001",
+      "title": "Implement user authentication feature",
+      "description": "## Overview\n\nImplement OAuth2 authentication for the application.\n\n## Tasks\n\n- [x] Research OAuth2 providers\n- [x] Setup authentication endpoints\n- [ ] Implement token refresh logic\n- [ ] Add unit tests\n\n## Notes\n\nThis will improve security and user experience.",
+      "url": "https://linear.app/test-org/issue/TEST-123/implement-user-authentication-feature",
+      "identifier": "TEST-123",
       "state": {
         "name": "In Progress",
         "type": "started"
       },
-      "priority": 2,
-      "priorityLabel": "Medium",
+      "priority": 1,
+      "priorityLabel": "High",
       "labels": {
         "nodes": [
           {
-            "name": "infrastructure",
+            "name": "backend",
             "color": "#3b82f6"
           },
           {
-            "name": "automation",
-            "color": "#10b981"
+            "name": "security",
+            "color": "#ef4444"
           }
         ]
       },
       "comments": {
         "nodes": [
           {
-            "id": "comment-1",
-            "body": "Started working on this. Will update the config in the infrastructure repo.",
-            "createdAt": "2025-01-15T10:30:00Z",
+            "id": "test-comment-001",
+            "body": "Started implementation. OAuth2 provider is configured.",
+            "createdAt": "2024-01-15T10:30:00Z",
             "user": {
-              "name": "John Doe"
+              "name": "Alice Developer"
             }
           },
           {
-            "id": "comment-2",
-            "body": "Config updated and tested in staging. Looks good!",
-            "createdAt": "2025-01-15T14:20:00Z",
+            "id": "test-comment-002",
+            "body": "Authentication endpoints are working. Testing in progress.",
+            "createdAt": "2024-01-15T14:20:00Z",
             "user": {
-              "name": "John Doe"
+              "name": "Bob Reviewer"
             }
           }
         ]
       },
       "assignee": {
-        "name": "John Doe",
-        "email": "john.doe@example.com"
+        "name": "Alice Developer",
+        "email": "alice@example.com"
       },
-      "createdAt": "2025-01-14T09:00:00Z",
-      "updatedAt": "2025-01-15T14:20:00Z"
+      "createdAt": "2024-01-14T09:00:00Z",
+      "updatedAt": "2024-01-15T14:20:00Z"
     }
   }
 }
