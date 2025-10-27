@@ -26,3 +26,9 @@ crab.yaml
 
 # binary
 mastercrab
+
+# Daily summary output
+daily_summary
+
+# Local scripts
+scripts
