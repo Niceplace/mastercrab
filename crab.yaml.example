@@ -1,0 +1,7 @@
+---
+linear:
+  apiToken: "YOUR_TOKEN_HERE"
+  baseURL: "https://api.linear.app/graphql"
+github:
+  apiToken: "GITHUB_TOKEN_HERE"
+  org: "Github org here"

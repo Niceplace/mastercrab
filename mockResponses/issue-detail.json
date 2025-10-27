@@ -1,0 +1,55 @@
+{
+  "data": {
+    "issue": {
+      "id": "test-issue-id-001",
+      "title": "Implement user authentication feature",
+      "description": "## Overview\n\nImplement OAuth2 authentication for the application.\n\n## Tasks\n\n- [x] Research OAuth2 providers\n- [x] Setup authentication endpoints\n- [ ] Implement token refresh logic\n- [ ] Add unit tests\n\n## Notes\n\nThis will improve security and user experience.",
+      "url": "https://linear.app/test-org/issue/TEST-123/implement-user-authentication-feature",
+      "identifier": "TEST-123",
+      "state": {
+        "name": "In Progress",
+        "type": "started"
+      },
+      "priority": 1,
+      "priorityLabel": "High",
+      "labels": {
+        "nodes": [
+          {
+            "name": "backend",
+            "color": "#3b82f6"
+          },
+          {
+            "name": "security",
+            "color": "#ef4444"
+          }
+        ]
+      },
+      "comments": {
+        "nodes": [
+          {
+            "id": "test-comment-001",
+            "body": "Started implementation. OAuth2 provider is configured.",
+            "createdAt": "2024-01-15T10:30:00Z",
+            "user": {
+              "name": "Alice Developer"
+            }
+          },
+          {
+            "id": "test-comment-002",
+            "body": "Authentication endpoints are working. Testing in progress.",
+            "createdAt": "2024-01-15T14:20:00Z",
+            "user": {
+              "name": "Bob Reviewer"
+            }
+          }
+        ]
+      },
+      "assignee": {
+        "name": "Alice Developer",
+        "email": "alice@example.com"
+      },
+      "createdAt": "2024-01-14T09:00:00Z",
+      "updatedAt": "2024-01-15T14:20:00Z"
+    }
+  }
+}

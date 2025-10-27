@@ -1,0 +1,24 @@
+{
+    "data": {
+        "viewer": {
+            "assignedIssues": {
+                "edges": [
+                    {
+                        "node": {
+                            "id": "test-issue-id-001",
+                            "title": "Implement user authentication feature",
+                            "url": "https://linear.app/test-org/issue/TEST-123/implement-user-authentication-feature"
+                        }
+                    },
+                    {
+                        "node": {
+                            "id": "test-issue-id-002",
+                            "title": "Fix database connection timeout",
+                            "url": "https://linear.app/test-org/issue/TEST-456/fix-database-connection-timeout"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
