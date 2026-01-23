@@ -32,3 +32,13 @@ daily_summary
 
 # Local scripts
 scripts
+
+# Gmail credentials and tokens
+*credentials*.json
+*-token.json
+
+# SQLite cache
+*.db
+*.db-journal
+*.db-wal
+*.db-shm

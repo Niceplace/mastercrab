@@ -1,0 +1,72 @@
+{
+  "id": "18d4c2f8a1b2c3d7",
+  "threadId": "18d4c2f8a1b2c3d7",
+  "labelIds": [
+    "INBOX"
+  ],
+  "snippet": "Please find the attached document...",
+  "sizeEstimate": 2534567,
+  "internalDate": "1703174400000",
+  "payload": {
+    "partId": "",
+    "mimeType": "multipart/mixed",
+    "filename": "",
+    "headers": [
+      {
+        "name": "From",
+        "value": "sender@company.com"
+      },
+      {
+        "name": "To",
+        "value": "recipient@test.com"
+      },
+      {
+        "name": "Subject",
+        "value": "Document Attached"
+      },
+      {
+        "name": "Date",
+        "value": "Thu, 21 Dec 2023 10:30:00 -0800"
+      }
+    ],
+    "body": {
+      "size": 0
+    },
+    "parts": [
+      {
+        "partId": "0",
+        "mimeType": "text/plain",
+        "filename": "",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "text/plain; charset=\"UTF-8\""
+          }
+        ],
+        "body": {
+          "size": 89,
+          "data": "UGxlYXNlIGZpbmQgdGhlIGF0dGFjaGVkIGRvY3VtZW50Lg=="
+        }
+      },
+      {
+        "partId": "1",
+        "mimeType": "application/pdf",
+        "filename": "document.pdf",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/pdf; name=\"document.pdf\""
+          },
+          {
+            "name": "Content-Disposition",
+            "value": "attachment; filename=\"document.pdf\""
+          }
+        ],
+        "body": {
+          "attachmentId": "ANGjdJ8wvKl2JD8wN9KL3mN8xZ",
+          "size": 2534000
+        }
+      }
+    ]
+  }
+}

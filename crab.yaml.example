@@ -5,3 +5,32 @@ linear:
 github:
   apiToken: "GITHUB_TOKEN_HERE"
   org: "Github org here"
+gmail:
+  credentialsFile: "~/.crab/mastercrab_google_credentials_desktop.json"
+  tokenFile: "~/.crab/gmail-token.json"
+  scopes:
+    - "https://www.googleapis.com/auth/gmail.readonly"
+    - "https://www.googleapis.com/auth/gmail.modify"
+  defaultAnalysisLimit: 0  # 0 = fetch ALL messages (no limit)
+  deletionBatchSize: 100
+
+  # Rate limiting (Gmail API quota: 250 req/sec per user)
+  rateLimiting:
+    requestsPerSecond: 100     # Conservative: 100/sec (40% of limit)
+    burstCapacity: 1000        # Max accumulated tokens
+    maxRetries: 5              # Exponential backoff attempts
+    initialBackoffMs: 100      # Starting backoff (100ms)
+    maxBackoffMs: 5000         # Maximum backoff (5 seconds)
+
+  # Batch sizes for API operations
+  batchSizes:
+    listBatchSize: 500         # Messages.list max results per page
+    fetchBatchSize: 50         # Messages.get batch size
+    cacheBatchSize: 100        # SQLite upsert batch size
+    progressUpdateFrequency: 500  # Report progress every N messages
+
+  cache:
+    enabled: true
+    location: "~/.crab/sqlite/gmail_cache.db"
+    syncIntervalMinutes: 60
+    ttlDays: 90

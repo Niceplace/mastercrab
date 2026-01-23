@@ -3,5 +3,5 @@
 # If MacOS
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    sudo go build -o /usr/local/bin/mastercrab
+     go build -o $HOME/.local/bin/mastercrab
 fi

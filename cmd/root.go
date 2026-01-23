@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"cli/main/cmd/daily"
+	"cli/main/cmd/gmail"
 	"fmt"
 	"os"
 	"strings"
@@ -54,6 +55,7 @@ func init() {
 
 	// Add child commands
 	rootCmd.AddCommand(daily.DailyCmd)
+	rootCmd.AddCommand(gmail.GmailCmd)
 }
 
 // initConfig reads in config file and ENV variables if set.
